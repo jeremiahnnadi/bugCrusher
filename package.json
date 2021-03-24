@@ -1,0 +1,14 @@
+{
+  "name": "bugcrusher",
+  "version": "1.0.0",
+  "description": "A bug-tracking application for STSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremiah Nnadi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
