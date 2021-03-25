@@ -16,6 +16,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// User Router Middleware
+app.use('/api/users', require('./routes/auth'));
+
 // Setting up Morgan (Development)
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('dev'))
