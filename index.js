@@ -1,8 +1,9 @@
 const cors = require('cors');
 const express = require('express');
+const passport = require('passport');
+const morgan = require('morgan');
 const { connect } = require('mongoose');
 const { success, error } = require('consola');
-const morgan = require('morgan');
 
 // Bring in the constants 
 const { DB, PORT } = require("./config");
@@ -15,6 +16,10 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Passport Middleware
+app.use(passport.initialize());
+require('./middleware/passport')(passport);
 
 // User Router Middleware
 app.use('/api/users', require('./routes/auth'));

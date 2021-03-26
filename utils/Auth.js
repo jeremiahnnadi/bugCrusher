@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require("bcryptjs");
+const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const {SECRET} = require('../config');
 
@@ -34,6 +35,7 @@ const userRegister = async (userDetails, role, res) => {
             password: hashedPassword,
             role: role
         });
+
         await newUser.save();
         return res.status(201).json({
             message: "Registration Successful.",
@@ -91,7 +93,7 @@ const userLogin = async (userCredentials, role, res) => {
         let result = {
             username: user.username,
             role: user.role,
-            token: `Bearer: ${token}`,
+            token: `Bearer ${token}`,
             expiresIn: 10800
         };
 
@@ -109,6 +111,10 @@ const userLogin = async (userCredentials, role, res) => {
     }
 };
 
+/**
+ * @DESC Passport middleware
+ */
+const userAuth = passport.authenticate('jwt', { session: false });
 
 const validateUsername = async username => {
     let user = await User.findOne ({ username });
