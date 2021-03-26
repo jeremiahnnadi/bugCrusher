@@ -1,7 +1,7 @@
-const cors = require('cors');
 const express = require('express');
-const passport = require('passport');
 const morgan = require('morgan');
+const cors = require('cors');
+const passport = require('passport');
 const { connect } = require('mongoose');
 const { success, error } = require('consola');
 
@@ -22,7 +22,7 @@ app.use(passport.initialize());
 require('./middleware/passport')(passport);
 
 // User Router Middleware
-app.use('/api/users', require('./routes/auth'));
+app.use('/api/users', require('./routes'));
 
 // Setting up Morgan (Development)
 if (process.env.NODE_ENV == 'development') {

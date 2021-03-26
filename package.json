@@ -2,11 +2,11 @@
   "name": "bugcrusher",
   "version": "1.0.0",
   "description": "A bug-tracking application for STSS",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=development nodemon app.js"
   },
   "author": "Jeremiah Nnadi",
   "license": "ISC",

@@ -116,6 +116,19 @@ const userLogin = async (userCredentials, role, res) => {
  */
 const userAuth = passport.authenticate('jwt', { session: false });
 
+/**
+ * @DESC Check Role Middleware
+ */
+const checkRole = (roles) => (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+        return next();
+    }
+    return res.status(401).json({
+        message: "Unauthorized Action",
+        success: false
+    })
+};
+
 const validateUsername = async username => {
     let user = await User.findOne ({ username });
     return user ? false : true;
@@ -126,7 +139,21 @@ const validateEmail = async email => {
     return user ? false : true;
 };
 
+const serializeUser = user => {
+    return {
+        user_id: user._id,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    }
+}
+
 module.exports = {
+    userAuth,
+    checkRole,
     userRegister,
-    userLogin
+    userLogin,
+    serializeUser
 };
