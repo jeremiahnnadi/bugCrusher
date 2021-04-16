@@ -1,0 +1,86 @@
+{{#ifEquals role "admin"}}
+    {{#each allTickets}}
+    <div class="col-md-6 col-lg-4">
+        <div class="project-card-no-image top-guard text-break">
+            <h3 class="overflow-guard">{{title}}</h3>
+            <h4><strong>Assigned To: </strong>{{assignedTo}}</h4>
+            <div class="align-middle">
+                <a class="btn btn-outline-primary btn-sm more-button" role="button" href="/tickets/{{_id}}"
+                    style="border-color: Orange;color: Orange ;">
+                    Details
+                </a>
+                <div class="tags">
+                    {{#contains ticketPriority "High"}}
+                    <span class="badge bg-danger text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                    {{#contains ticketPriority "Medium"}}
+                    <span class="badge bg-warning text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                    {{#contains ticketPriority "Low"}}
+                    <span class="badge bg-info text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                </div>
+                <div class="tags"> 
+                    <span class="badge bg-secondary text-light">{{ticketType}}</span>   
+                </div>
+                <div class="tags">
+                    {{#contains ticketStatus "Open"}}
+                    <span class="badge bg-primary text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                    {{#contains ticketStatus "Resolved"}}
+                    <span class="badge bg-success text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                    {{#contains ticketStatus "Closed"}}
+                    <span class="badge bg-dark text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+{{else}}
+    {{#if tickets}}
+        {{#each tickets}}
+            <div class="col-md-6 col-lg-4">
+        <div class="project-card-no-image top-guard text-break">
+            <h3 class="overflow-guard">{{title}}</h3>
+            <h4><strong>Assigned To: </strong>{{assignedTo}}</h4>
+            <div class="align-middle">
+                <a class="btn btn-outline-primary btn-sm more-button" role="button" href="#"
+                    style="border-color: Orange;color: Orange ;">Details</a>
+                <div class="tags">
+                    {{#contains ticketPriority "High"}}
+                    <span class="badge bg-danger text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                    {{#contains ticketPriority "Medium"}}
+                    <span class="badge bg-warning text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                    {{#contains ticketPriority "Low"}}
+                    <span class="badge bg-info text-light">{{ticketPriority}}</span>
+                    {{/contains}}
+                </div>
+                <div class="tags"> 
+                    <span class="badge bg-secondary text-light">{{ticketType}}</span>   
+                </div>
+                <div class="tags">
+                    {{#contains ticketStatus "Open"}}
+                    <span class="badge bg-primary text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                    {{#contains ticketStatus "Resolved"}}
+                    <span class="badge bg-success text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                    {{#contains ticketStatus "Closed"}}
+                    <span class="badge bg-dark text-light">{{ticketStatus}}</span>
+                    {{/contains}}
+                </div>
+            </div>
+        </div>
+    </div>
+        {{/each}}
+{{else}}
+    <div style="margin:auto;" class="display-5 text-center">
+        <h3>You do not have any tickets</h3>
+        <h6 style="color:orange;" class="display-6"><a href="/tickets/add">Create </a>a ticket to get started</h5>
+    </div>
+    {{/if}}
+{{/ifEquals}}

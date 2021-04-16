@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Projects - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+        <div class="container">
+            <a class="navbar-brand logo" href="#">
+                <img style="border-radius: 50%; margin-right: 5%;" src="assets/logos/1.png" alt="" , width="40" ,
+                    height="40">
+                BugCrusher
+            </a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle
+                    navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="projects-no-images.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        {{> _navbar}}
+        <main class="page projects-page">
+            <section class="top-block project-no-images">
+                <div class="container">
+                    <div class="row">
+                        <header class="py-5">
+                            <h3 class="display-5 title-set">Dashboard</h3>
+                            <p class="lead mb-0 align-center">{{name}}
+                                <span style="margin-left: 10px; text-transform: uppercase;"
+                                    class="badge bg-dark tags text-light">
+                                    {{#contains role "admin"}}
+                                    {{role}}<i style="color: gold;margin-left: 4px;" class="fas fa-tools"></i>
+                                    {{/contains}}
+                                    {{#contains role "user"}}
+                                    {{role}}<i style="color: #FFF8EE;margin-left: 4px;" class="fas fa-medal"></i>
+                                    {{/contains}}
+                                    {{#contains role "developer"}}
+                                    {{role}}<i style="color: #77dd77;margin-left: 4px;" class="fas fa-code"></i>
+                                    {{/contains}}
+                                </span>
+                            </p>
+                            <hr class="solid">
+                        </header>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bold align-middle">Ticket Information</p>
+                                        </div>
+                                        <div class="col">
+                                            <ul class="nav justify-content-end nav-pills">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active create-btn" aria-current="page"
+                                                        href="/dashboard">
+                                                        Back to Dashboard
+                                                        <i style="margin-left: 5px" class="fas fa-arrow-left"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <h3 style="color:#ff4500;" class="display-6">Ticket Title</h3>
+                                            <h5 class="text-muted lead"><strong>{{ticket.title}}</strong></h5>
+                                            <hr class="solid">
+                                            <h5 class="display-">Ticket ID</h5>
+                                            <h5 class="text-muted lead">{{ticket._id}}</h5>
+                                        </div>
+                                        <div class="col-8">
+                                            <h5 class="display-6">Description</h5>
+                                            <div style="max-height: 110px;overflow-y: auto;border-bottom: 2px #ff4500 solid;"
+                                                class="card">
+                                                <div class="card-body">
+                                                    <h6 class="text-muted">
+                                                        {{ticket.description}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div style="border-right: 1px grey solid;" class="col-5">
+                                                    <h5>Priority</h5>
+                                                    <h5 class="text-muted lead">
+                                                        {{#contains ticket.ticketPriority "High"}}
+                                                        <span class="badge bg-danger text-light text-uppercase">{{ticket.ticketPriority}}</span>
+                                                        {{/contains}}
+                                                        {{#contains ticket.ticketPriority "Medium"}}
+                                                        <span class="badge bg-warning text-light text-uppercase">{{ticket.ticketPriority}}</span>
+                                                        {{/contains}}
+                                                        {{#contains ticket.ticketPriority "Low"}}
+                                                        <span class="badge bg-info text-light text-uppercase">{{ticket.ticketPriority}}</span>
+                                                        {{/contains}}                                                
+                                                    </h5>
+                                                </div>
+                                                <div class="col-7">
+                                                    <h5>Type</h5>
+                                                    <h5 class="text-muted lead">
+                                                        <span class="badge bg-secondary text-light text-uppercase">{{ticket.ticketType}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div style="border-bottom: 2px #ff4500 solid;" class="card">
+                                                <div class="card-body">
+                                                    <div class="row align-center">
+                                                        <div style="border-right: 1px grey solid;" class="col">
+                                                            <span class="h5 text-muted">Created By: </span><span
+                                                                class="lead">{{ticket.createdBy}}</span>
+                                                        </div>
+                                                        <div class="col">
+                                                            <span class="h5 text-muted">Assigned To: </span><span
+                                                                class="lead">{{ticket.assignedTo}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row g-2 form-group">
+                                        <div class="col-4">
+                                            <h5>Status</h5>
+                                            <h5 class="text-muted lead">
+                                                {{#contains ticket.ticketStatus "Open"}}
+                                                <span class="badge bg-primary text-light text-uppercase">{{ticket.ticketStatus}}</span>
+                                                {{/contains}}
+                                                {{#contains ticket.ticketStatus "Resolved"}}
+                                                <span class="badge bg-success text-light text-uppercase">{{ticket.ticketStatus}}</span>
+                                                {{/contains}}
+                                                {{#contains ticket.ticketStatus "Closed"}}
+                                                <span class="badge bg-dark text-light text-uppercase">{{ticket.ticketStatus}}</span>
+                                                {{/contains}}
+                                            </h5>
+                                        </div>
+                                        <div class="col-8">
+                                            <div style="border-bottom: 2px grey solid;" class="card">
+                                                <div class="card-body">
+                                                    <div class="row align-center">
+                                                        <div style="border-right: 1px grey solid;" class="col">
+                                                            <span class="h6 text-highlight">Created: </span><span
+                                                                class="blockquote-footer h6">{{formatDate ticket.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                                                        </div>
+                                                        <div class="col">
+                                                            <span class="h6 text-highlight">Last Update: </span><span
+                                                                class="blockquote-footer h6">{{formatDate ticket.updatedAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{#ifEquals role "admin"}}
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <a href="/tickets/update/{{ticket._id}}" class="btn btn-primary">Edit</a>
+                                            <a href="/tickets/delete/{{ticket._id}}" class="btn btn-outline-danger">Delete Ticket</a>
+                                        </div>
+                                    </div>
+                                    {{/ifEquals}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </section>
+        </main>
+        <footer class="page-footer">
+            <div class="container">
+                <div class="links"><a href="#">About me</a><a href="#">Contact me</a><a href="#">Projects</a></div>
+                <div class="social-icons"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                            class="icon ion-social-instagram-outline"></i></a><a href="#"><i
+                            class="icon ion-social-twitter"></i></a></div>
+            </div>
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+        <script src="assets/js/theme.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,114 @@
+<body>
+    {{> _navbar}}
+    <main class="page projects-page">
+        <section class="top-block project-no-images">
+            <div class="container">
+                {{> _header}}
+                <div class="card shadow bg-light">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <p class="font-weight-bold align-middle">Report a new Issue</p>
+                            </div>
+                            <div class="col">
+                                <ul class="nav justify-content-end nav-pills">
+                                    <li class="nav-item">
+                                        <a style="background-color: red !important;" class="nav-link active create-btn"
+                                            aria-current="page" href="/dashboard">
+                                            Cancel
+                                            <i style="margin-left: 5px" class="fas fa-times"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <article class="card-body mx-auto" style="width: 70%;">
+                        <form action="/tickets/add" role="form" method="POST">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="title">Ticket Title</label>
+                                        <input id="title" name="title" class="form-control" placeholder="Ticket Title"
+                                            type="text" required="true">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group">
+                                        <label for="ticketType">Ticket Type</label>
+                                        <select class="form-select form-control" id="ticketType" name="ticketType"
+                                            required="true">
+                                            <option value="" selected="true" disabled="disabled"> Select Ticket Type
+                                            </option>
+                                            <option>Development</option>
+                                            <option>Testing</option>
+                                            <option>Production</option>
+                                        </select>
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label for="ticketPriority">Ticket Priority</label>
+                                        <select class="form-select form-control" id="ticketPriority"
+                                            name="ticketPriority" required="true">
+                                            <option value="" selected="true" disabled="disabled"> Select Ticket Priority
+                                            </option>
+                                            <option value="High">HIGH</option>
+                                            <option value="Medium">MEDIUM</option>
+                                            <option value="Low">LOW</option>
+                                        </select>
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label for="ticketStatus">Ticket Status</label>
+                                        <select class="form-select form-control" id="ticketStatus" name="ticketStatus">                            
+                                            <option value="Open" selected="true">Open</option>
+                                            <option value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                        </select>
+                                    </div> <!-- form-group end.// -->
+                                </div>
+
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label for="description">Ticket Description</label>
+                                        <textarea style="height: 125px;" id="description" name="description"
+                                            class="form-control" placeholder="Describe the error" type="textarea"
+                                            required="true"></textarea>
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group">
+                                        <label for="assignedTo">Assigned To</label>
+                                        <select class="form-select form-control" id="assignedTo"
+                                            name="assignedTo">
+                                            <option value="" selected="true" disabled="disabled"> Select a Developer to
+                                                Assign This Ticket To</option>
+                                            <option value="Jeremiah Nnadi">Jeremiah</option>
+                                            <option value="Mwara Nyoike">Mwara</option>
+                                            <option value="Yassine Lahkmarti">Yassine</option>
+                                            <option value="Julian Mason">Julian</option>
+                                            <option value="Madani Napaul">Madani</option>
+                                            <option value="Okemdi Udeh">Okemdi</option>
+                                        </select>
+                                    </div> <!-- form-group end.// -->
+                                    <div class="form-group">
+                                        <label hidden for="createdBy">Created By</label>
+                                        <input hidden type="createdBy" id="createdBy" name="createdBy"
+                                            class="form-control" value="{{name}}">
+                                    </div> <!-- form-group// -->
+                                    <hr style="margin: 22px;" class="solid">
+                                    <div class="form-group">
+                                        <button type="submit" class="search-btn btn btn-primary btn-block">Create
+                                            Ticket</button>
+                                    </div> <!-- form-group// -->
+                                </div>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="links"><a href="#">About me</a><a href="#">Contact me</a><a href="#">Projects</a></div>
+            <div class="social-icons"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                        class="icon ion-social-instagram-outline"></i></a><a href="#"><i
+                        class="icon ion-social-twitter"></i></a></div>
+        </div>
+    </footer>
+</body>

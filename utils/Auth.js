@@ -1,159 +1,112 @@
-const User = require('../models/User');
-const bcrypt = require("bcryptjs");
+const express = require('express');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const {SECRET} = require('../config');
+const User = require('../models/User');
 
-/**
- * @DESC To REGISTER a user (Role Non-Specific)
- */
-const userRegister = async (userDetails, role, res) => {
+// Check Role Function
+const checkRole = (roles) => (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+        return next();
+    }
+    res.render('../views/error/401.hbs');
+};
+
+// Register User Function
+const registerUser = async (req, res) => {
+    var { role, name, email, username, password, password1  } = req.body;
+    let errors = []; 
+
+    /**
+     * VALIDATION
+     */
+
     try {
-        // Validate the username
-        let usernameNotTaken = await validateUsername(userDetails.username);
-        if (!usernameNotTaken) {
-            return res.status(400).json({
-                message: `Username is already taken`,
-                success: false
-            });
+        // Check required fields
+        if(!role || !name || !email || !username || !password || !password1){
+            errors.push({ msg: 'Please fill in all required fields'});
         }
-
-        // Validate the email
-        let emailRegistered = await validateEmail(userDetails.email);
-        if (!emailRegistered) {
-            return res.status(400).json({
-                message: `Email is already registered`,
-                success: false
-            });
+    
+        // Check if passwords match
+        if(password !== password1) {
+            errors.push({ msg: 'The passwords are not a match' });
         }
-
-        // Get the hashed password
-        const hashedPassword = await bcrypt.hash(userDetails.password, 12);
-        // Create a new user 
-        const newUser = new User({
-            ... userDetails,
-            password: hashedPassword,
-            role: role
-        });
-
-        await newUser.save();
-        return res.status(201).json({
-            message: "Registration Successful.",
-            success: true
-        });
+    
+        // Check password length
+        if(password.length < 12) {
+            errors.push({ msg: 'Password should be at least 12 characters long' });
+        }
+    
+        // Ensure that password contains at least 1 letter
+        if(password.search(/[a-z]/) < 0){
+            errors.push({ msg: 'Password should contain at least one letter' });
+        }
+    
+        // Ensure that password contains at least 1 Uppercase letter
+        if(password.search(/[A-Z]/) < 0){
+            errors.push({ msg: 'Password should contain at least one uppercase character' });
+        }
+    
+        // Ensure that password contains at least 1 number
+        if(password.search(/[0-9]/) < 0){
+            errors.push({ msg: 'Password should contain at least one number' });
+        }
+    
+        // Ensure that password contains at least 1 special character
+        if(password.search(/\W/) < 0){
+            errors.push({ msg: 'Password should contain at least one special character' });
+        }
         
-    } catch (error) {
-        // Implement logger function
+        if(errors.length > 0) {
+            // Failed Validation
+            res.render('register.ejs', {errors, role, name, email, username, password, password1})
+        } else {
+            // Passed Validation
+            const user = await User.findOne({ username: username })
+            if(user){
+                // User already exists 
+                errors.push({ msg: 'This Username is already registered to a user'});
+                res.render('register.ejs', {errors, role, name, email, username, password, password1})
+            } else {
+                // User does not exist 
+                
+                // Hash the password 
+                const hashedPassword = await bcrypt.hash(password, 12);
+                
+                // Create the new User with the hashed password
+                const newUser = new User({
+                    role,
+                    username,
+                    name,
+                    email,
+                    password: hashedPassword
+                })
+    
+                // Save the new User in the database
+                await newUser.save()
+                    .then(user => {
+                        req.flash('success_msg', 'Registration Complete! Please log in to view your account.')
+                        res.redirect('/users/login')
+                        return;
+                    })
+                    .catch(err => console.log(err));
+        
+                // // Flash the message to the user 
+                // req.flash('success_msg', 'Registration Complete! Please log in to view your account.')
+                // res.redirect('/users/login');
+                // return;
+            }
+        }
+    } catch (err) {
+        console.log(err);
         return res.status(500).json({
             message: "Unable to create your account.",
             success: false
         });
     }
-};
-
-/**
- * @DESC To LOGIN a user (Role Non-Specific)
- */
-const userLogin = async (userCredentials, role, res) => {
-    let { username, password } = userCredentials;
-
-    // Check if the username is in the database
-    const user = await User.findOne({ username });
-    if (!user) {
-        return res.status(404).json({
-            message: "Username not found. Invalid login credentials",
-            success: false
-        });
-    }
-
-    // Check the role 
-    if (user.role !== role) {
-        return res.status(403).json({
-            message: "Please ensure that you are attempting a login from the correct portal",
-            success: false
-        });
-    }
-
-    // Compare the passwords 
-    let isMatch = await bcrypt.compare(password, user.password);
-    if(isMatch) {
-        // Sign in the token and issue it to the user 
-        let token = jwt.sign(
-            {
-                user_id: user._id,
-                role: user.role,
-                username: user.username,
-                email: user.email
-            },
-            SECRET,
-            { expiresIn: "3h"}
-        );
-
-        // Assign token and user details to variable 
-        let result = {
-            username: user.username,
-            role: user.role,
-            token: `Bearer ${token}`,
-            expiresIn: 10800
-        };
-
-        return res.status(200).json({
-            ... result,
-            message: "Login Successful",
-            success: true
-        });
-
-    } else {
-        return res.status(403).json({
-            message: "Incorrect password.",
-            success: false
-        });
-    }
-};
-
-/**
- * @DESC Passport middleware
- */
-const userAuth = passport.authenticate('jwt', { session: false });
-
-/**
- * @DESC Check Role Middleware
- */
-const checkRole = (roles) => (req, res, next) => {
-    if (roles.includes(req.user.role)) {
-        return next();
-    }
-    return res.status(401).json({
-        message: "Unauthorized Action",
-        success: false
-    })
-};
-
-const validateUsername = async username => {
-    let user = await User.findOne ({ username });
-    return user ? false : true;
-};
-
-const validateEmail = async email => {
-    let user = await User.findOne ({ email });
-    return user ? false : true;
-};
-
-const serializeUser = user => {
-    return {
-        user_id: user._id,
-        username: user.username,
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
-    }
 }
 
+
 module.exports = {
-    userAuth,
-    checkRole,
-    userRegister,
-    userLogin,
-    serializeUser
-};
+    registerUser,
+    checkRole
+}

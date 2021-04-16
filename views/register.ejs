@@ -1,0 +1,77 @@
+<section class="loginform">
+  <form action="/users/register" method="POST">
+    <div class="pb-2"><h3 class="">Register a User</h3></div> 
+    <%- include ("./partials/messages") %>
+    <div class="form-group">
+      <label for="role">User Role</label>
+      <select class="form-control" name="role" id="role" required>
+        <option value="" selected-disabled hidden>Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="user">Client</option>
+        <option value="developer">Developer</option>
+      </select>
+    </div>
+    <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="name"
+            id="name"
+            name="name"
+            class="form-control"
+            placeholder="Enter Name"
+            value="<%= typeof name != 'undefined' ? name : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="username"
+            id="username"
+            name="username"
+            class="form-control"
+            placeholder="Enter Username"
+            value="<%= typeof username != 'undefined' ? username : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Create Password"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password1">Confirm Password</label>
+          <input
+            type="password"
+            id="password1"
+            name="password1"
+            class="form-control"
+            placeholder="Confirm Password"
+            value="<%= typeof password1 != 'undefined' ? password1 : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group"><button class="btn btn-primary btn-block vorange" type="submit">Register User</button></div>
+        <a class="forgot" href="#">Need Help?</a>
+    </form>
+</section>

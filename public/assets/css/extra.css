@@ -1,0 +1,117 @@
+.gradient {
+  background: linear-gradient(120deg, #ff4500, #cc6510) !important;
+  color: #fff;
+}
+.vwhite:hover {
+  color: #cc6510 !important;
+  background-color: #fff !important;
+}
+.vorange:hover {
+  color: #fff !important;
+  background-color: #cc6510 !important;
+  border-color: #fff !important;
+}
+
+.vbutton:hover {
+  color: #cc6510 !important;
+  background-color: #fff !important;
+  border-color: #cc6510 !important;
+}
+
+.loginform {
+  height: auto;
+  background-size: cover;
+  position: initial;
+  background: #cc6510;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginform form {
+  height: 100%;
+  max-width: 600px;
+  width: 90%;
+  /*background-color: #1e2833;*/
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.overflow-guard {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.more-button:hover {
+  color: #fff !important;
+  background-color: #cc6510 !important;
+  border-color: #cc6510 !important;
+}
+
+.project-card-no-image .tags {
+  text-transform: uppercase;
+  font-size: .80em !important;
+  float: right !important;
+  margin: 1px !important;
+}
+
+.top-guard {
+  border-top: 4px solid #ffa500 !important;
+}
+
+.reset-btn {
+  color: Orange !important;
+}
+
+.search-btn {
+  background-color: orange !important;
+  border-color: orange !important; 
+}
+
+.search-btn:hover {
+  background-color: white !important;
+  color: orange !important; 
+}
+
+.create-btn {
+  background-color: #353b48 !important;
+}
+
+@media (min-width:768px) {
+  .top-block {
+    padding-bottom: 100px;
+    padding-top: 16.666px;
+  }
+}
+
+.top-block {
+  padding-bottom: 60px;
+  padding-top: 10px;
+}
+
+.title-set {
+  color: #ff4500 !important;
+}
+
+.logout-btn {
+  background-color: grey !important;
+  border-color: #ff4500 !important;
+}
+
+.logout-btn:hover {
+  background-color: #ff4500 !important;
+  border-color: #ff4500 !important;
+}
+
+.text-highlight {
+  color: #ff4500 !important;
+}
