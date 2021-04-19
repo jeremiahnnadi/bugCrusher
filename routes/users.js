@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { registerUser, checkRole } = require('../utils/Auth');
+const { ensureAuth, ensureGuest } = require('../config/auth');
 const passport = require('passport');
 
 // Login Page
-router.get('/login', (req, res) =>  {
+router.get('/login', ensureGuest,  (req, res) =>  {
     res.render('login.ejs');
 });
 
@@ -25,12 +26,12 @@ router.get('/logout', (req, res) => {
 })
 
 // Register Page 
-router.get('/register', (req, res) => {
+router.get('/register', ensureAuth, checkRole(["admin"]), (req, res) => {
     res.render('register.ejs')
 });
 
 // Register Handle 
-router.post('/register', async (req, res) => {
+router.post('/register', ensureAuth, checkRole(["admin"]), async (req, res) => {
     await registerUser(req, res);
 });
 

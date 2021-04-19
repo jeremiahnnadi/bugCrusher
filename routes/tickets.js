@@ -7,6 +7,7 @@ const { checkRole } = require('../utils/Auth');
 const { ensureAuth } = require('../config/auth');
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
+const sanitize = require('mongo-sanitize');
 
 // Bring in DOMPurify
 const window = new JSDOM('').window;
@@ -69,8 +70,7 @@ router.get('/delete/:id', ensureAuth, checkRole(["admin"]), async (req, res) => 
         await Ticket.remove({ _id: req.params.id });
         res.redirect('/dashboard');
     } catch (error) {
-        console.error(error);
-        res.render('error/500.hbs');
+        return res.render('error/500.hbs');
     }
 })
 
@@ -88,31 +88,33 @@ router.get('/update/:id', ensureAuth, async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.render('error/500.hbs');
+        return res.render('error/500.hbs');
     }
 }) 
 
 // Edit Page Handler 
 router.post('/update/:id', ensureAuth, checkRole(["admin", "developer", "tester"]), async (req, res) => {
     try {
-        let backURL="/tickets/" + req.params.id
+        var backURL="/tickets/" + req.params.id
         // req.params.id = DOMPurify.sanitize(req.params.id);
         // req.body = DOMPurify.sanitize(req.body);
         let ticket = await Ticket.findById(req.params.id);
-        ticket = await Ticket.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        ticket = await Ticket.findOneAndUpdate({ _id: sanitizes(req.params.id) }, sanitize(req.body), {
             new: true,
-        })
+        });
         res.redirect(backURL);
     } catch (err) {
-        res.render('error/500.hbs');
+        return res.render('error/500.hbs');
     }
 })
 
 // Add a Comment Handler
 router.post('/addComment', ensureAuth, async (req, res) => {
     try {
-        req.body.user = req.user.id;
-        await Comment.create(req.body);
+        req.body.user = DOMPurify.sanitize(req.body.user);
+        req.user.id = DOMPurify.sanitize(req.user.id);
+        req.body.user = req.user.id
+        await Comment.create(req.body)
         res.redirect('back');
     } catch (error) {
         console.error(error);
