@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col">
+        <div style="margin-top: 40px;" class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <p class="font-weight-bold align-middle lead">Comments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-7">
+                        <div class="form-group">
+                        {{#if comments}}
+                            {{#each comments}}
+                                <textarea style="max-height: 50px;overflow-y:" type="text" id="content" name="content"
+                                    class="form-control" disabled>{{content}}</textarea>
+                                <div style="margin-top: 10px;">
+                                    <b>Posted By: </b><span class="muted-text">{{author}}</span> 
+                                    <h6><span class="badge badge-secondary">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span></h6>
+                                    <hr class="solid">
+                                </div>
+                            {{/each}}
+                        {{else}}
+                            <div style="margin: auto;">
+                                <span class="lead">This ticket has no comments</span>
+                                <span class="blockquote-footer">Add a comment to get started</span>
+                            </div>
+                        {{/if}}
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <form action="/tickets/addComment" method="POST">
+                        {{#ifEquals ticket.ticketStatus "Closed"}}
+                            <div style="margin:auto;" class="display-5 text-center">
+                                <span class="lead">This ticket has been Closed</span>
+                                <h6 style="color:orange;" class="blockquote-footer"> Re-open the ticket to add comments</h5>
+                            </div>
+                        {{else}}
+                            <div class="form-group">                            
+                                <input style="max-height: 110px;overflow-y:" type="text" id="content" name="content"
+                                    class="form-control" required="true" placeholder="Enter a Comment ..."/>
+                            </div>
+                            <div class="form-group">
+                                <label hidden for="author">Author</label>
+                                <input hidden type="text" id="author" name="author" class="form-control"
+                                    value="{{name}}" />
+                            </div>
+                            <div class="form-group">
+                                <label hidden for="ticketId">Ticket ID</label>
+                                <input hidden type="text" id="ticketId" name="ticketId" class="form-control"
+                                    value="{{ticket._id}}" />
+                            </div>
+                            <div class="modal-footer-right">
+                                <button class="btn btn-primary" type="submit">Add Comment</button>
+                            </div>
+                        {{/ifEquals}}
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

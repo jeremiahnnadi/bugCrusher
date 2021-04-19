@@ -3,66 +3,95 @@
     <main class="page projects-page">
         <section class="top-block project-no-images">
             <div class="container">
-                {{> _header}}                
+                {{> _header}}
                 <div class="row">
                     <div class="col">
                         <div class="card shadow">
                             <div class="card-header">
                                 <div class="row">
-                                <div class="col">
-                                    <p class="font-weight-bold align-middle">Ticket Information</p>
-                                </div>
-                                <div class="col">
-                                    <ul class="nav justify-content-end nav-pills">
-                                        <li class="nav-item">
-                                            <a class="nav-link active create-btn" aria-current="page" href="/tickets/add">
-                                                Create New Ticket
-                                                <i style="margin-left: 5px" class="fas fa-plus"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <div class="col">
+                                        <p class="font-weight-bold align-middle lead">Ticket Information</p>
+                                    </div>
+                                    <div class="col">
+                                        <ul class="nav justify-content-end nav-pills">
+                                            <li class="nav-item">
+                                                <a class="nav-link active create-btn" aria-current="page"
+                                                    href="/tickets/add">
+                                                    Create New Ticket
+                                                    <i style="margin-left: 5px" class="fas fa-plus"></i>
+                                                </a>
+                                            </li>
+                                            {{#ifEquals role "admin"}}
+                                            <li style="margin-left: 10px;" class="nav-item">
+                                                <a class="nav-link active btn-secondary" aria-current="page"
+                                                    href="/users/register">
+                                                    Add User
+                                                    <i style="margin-left: 5px" class="fas fa-user-circle"></i>
+                                                </a>
+                                            </li>
+                                            {{/ifEquals}}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;
-                                            <select class="form-control form-control-sm custom-select custom-select-sm" onchange="location = this.value;">
-                                            <option value="/dashboard" selected="">All Tickets</option>
-                                            <option value="/incomplete">Incomplete Coursework</option>
-                                            <option value="/complete">Complete Coursework</option>
-                                            </select>&nbsp;</label>
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label>Show&nbsp;
+                                                <select
+                                                    class="form-control form-control-sm custom-select custom-select-sm"
+                                                    onchange="location = this.value;">
+                                                    <option value="/dashboard">All Tickets</option>
+                                                    <option value="/open" {{#if statusopen}}selected{{/if}}>Open Tickets
+                                                    </option>
+                                                    <option value="/resolved" {{#if statusresolved}}selected{{/if}}>
+                                                        Resolved Tickets</option>
+                                                    <option value="/closed" {{#if statusclosed}}selected{{/if}}>Closed
+                                                        Tickets</option>
+                                                </select>&nbsp;</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="text-md-right dataTables_filter" id="dataTable_filter">
-                                            <a href="/dashboard"><i style="margin-right: 2.5%;"class="reset-btn fas fa-sync-alt"></i></a>
+                                            <a href="/dashboard"><i style="margin-right: 2.5%;"
+                                                    class="reset-btn fas fa-sync-alt" data-toggle="tooltip"
+                                                    data-placement="top" title="Refresh"></i></a>
+                                            {{#ifEquals role "admin"}}
                                             <label>
-                                                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" name="search" placeholder="Search for a Project...">
-                                                <div class="input-group-append"><input class="search-btn btn btn-primary py-0" value="Search" type="submit"></div>
-                                                </div>
-                                            </label>
+                                                <form action="/dashboard" method="GET">
+                                                    <div class="input-group"><input
+                                                            class="bg-light form-control border-0 small" type="text"
+                                                            name="search" placeholder="Search for a Ticket...">
+                                                        <div class="input-group-append"><input
+                                                                class="search-btn btn btn-primary py-0" value="Search"
+                                                                type="submit"></div>
+                                                </form>
                                         </div>
+                                        </label>
+                                        {{/ifEquals}}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    {{> _tickets}}        
-                                </div>
+                            </div>
+                            <div class="row">
+                                <hr>
+                            </div>
+                            <div class="row">
+                                {{> _tickets}}
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     </main>
     <footer class="page-footer">
         <div class="container">
             <div class="links"><a href="#">About me</a><a href="#">Contact me</a><a href="#">Projects</a></div>
-            <div class="social-icons"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-instagram-outline"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a></div>
+            <div class="social-icons"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                        class="icon ion-social-instagram-outline"></i></a><a href="#"><i
+                        class="icon ion-social-twitter"></i></a></div>
         </div>
     </footer>
 </body>

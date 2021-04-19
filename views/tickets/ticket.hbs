@@ -172,19 +172,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{#ifEquals role "admin"}}
+                                    </div>                    
                                     <div class="row">
                                         <div class="col-md-12 text-right">
                                             <a href="/tickets/update/{{ticket._id}}" class="btn btn-primary">Edit</a>
+                                            {{#ifEquals role "admin"}}
                                             <a href="/tickets/delete/{{ticket._id}}" class="btn btn-outline-danger">Delete Ticket</a>
+                                            {{/ifEquals}}
                                         </div>
-                                    </div>
-                                    {{/ifEquals}}
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {{> _comments}}
                 </div>
                 </div>
                 </div>

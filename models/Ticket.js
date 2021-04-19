@@ -1,7 +1,12 @@
 const { Schema, model} = require('mongoose');
+const { nanoid } = require('nanoid')
 
 const TicketSchema = new Schema(
         {
+            _id: {
+                type: String,
+                default: () => nanoid(12)
+            },
             title: {
                 type: String,
                 trim: true
@@ -36,11 +41,7 @@ const TicketSchema = new Schema(
             createdAt: {
                 type: Date,
                 default: Date.now 
-            },
-            comments: {
-                type: Schema.Types.ObjectId,
-                ref: 'Comment'
-            } 
+            }
         }, {timestamps: true});
 
 module.exports = model('Ticket', TicketSchema);

@@ -46,7 +46,7 @@
             <h3 class="overflow-guard">{{title}}</h3>
             <h4><strong>Assigned To: </strong>{{assignedTo}}</h4>
             <div class="align-middle">
-                <a class="btn btn-outline-primary btn-sm more-button" role="button" href="#"
+                <a class="btn btn-outline-primary btn-sm more-button" role="button" href="/tickets/{{_id}}"
                     style="border-color: Orange;color: Orange ;">Details</a>
                 <div class="tags">
                     {{#contains ticketPriority "High"}}
@@ -78,9 +78,17 @@
     </div>
         {{/each}}
 {{else}}
-    <div style="margin:auto;" class="display-5 text-center">
-        <h3>You do not have any tickets</h3>
-        <h6 style="color:orange;" class="display-6"><a href="/tickets/add">Create </a>a ticket to get started</h5>
-    </div>
+        {{#if result}}
+            <div style="margin:auto;" class="display-5 text-center">
+                <h3 class="lead">Your search did not return any results</h3>
+                <hr class="solid">
+                <h6 style="color:orange;" class="display-6">Please try again with the correct title</h5>
+            </div>
+            {{else}}
+            <div style="margin:auto;" class="display-5 text-center">
+                <h3>You do not have any tickets</h3>
+                <h6 style="color:orange;" class="display-6"><a href="/tickets/add">Create </a>a ticket to get started</h5>
+            </div>
+        {{/if}}
     {{/if}}
 {{/ifEquals}}

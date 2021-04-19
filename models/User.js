@@ -1,19 +1,25 @@
 const { Schema, model } = require('mongoose');
+const { nanoid } = require('nanoid');
 
 const UserSchema = new Schema (
     {
+        _id: {
+            type: String,
+            default: () => nanoid(12)
+        },
         name: {
             type: String,
             required: true
         },
         email: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
         role: {
             type: String,
             default: "user",
-            enum: ["user","admin","developer"]
+            enum: ["user","admin","developer","tester"]
         },
         username: {
             type: String,
