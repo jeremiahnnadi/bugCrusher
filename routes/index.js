@@ -4,6 +4,7 @@ const Ticket = require('../models/Ticket');
 const { checkRole } = require('../utils/Auth');
 const User =  require('../models/User');
 const { ensureAuth, ensureGuest } = require('../config/auth');
+const sanitize = require('mongo-sanitize');
 
 // Welcome Page 
 router.get('/', ensureGuest, (req, res) => {
@@ -28,8 +29,8 @@ router.get('/dashboard', ensureAuth, async(req, res) => {
             res.render('error/500.hbs');
         }
     } else {
-        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        try {
+        const regex = new RegExp(escapeRegex(sanitize(req.query.search)), 'gi');
+        try {   
             const allTickets = await Ticket.find({$or: [{title: regex}, {description: regex}]}).lean();
             if(allTickets.length < 1) {
                 console.log("Nothing found");
